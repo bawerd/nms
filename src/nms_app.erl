@@ -63,4 +63,4 @@ stop(State) ->
 %% Internal functions
 %% ====================================================================
 init(Args) ->
-	io:fwrite("Args: ~w~n", [Args]).
+	io:fwrite("Args: ~p~n", [Args]).

@@ -7,6 +7,7 @@
 -module(nms_sup).
 
 -behaviour(supervisor).
+
 %% --------------------------------------------------------------------
 %% Include files
 %% --------------------------------------------------------------------
@@ -26,8 +27,8 @@
 %% --------------------------------------------------------------------
 %% Macros
 %% --------------------------------------------------------------------
--define(SERVER, ?MODULE).
-
+-define(CHILD, monitor).
+-define(CHILD_ID, nms_monitor).
 %% --------------------------------------------------------------------
 %% Records
 %% --------------------------------------------------------------------
@@ -47,10 +48,10 @@
 %%          ignore                          |
 %%          {error, Reason}
 %% --------------------------------------------------------------------
-init([]) ->
-    AChild = {'AName',{'AModule',start_link,[]},
-	      permanent,2000,worker,['AModule']},
-    {ok,{{one_for_all,0,1}, [AChild]}}.
+init(Configuration) ->
+    Monitor = {?CHILD_ID,{?CHILD, start_link, [Configuration]},
+	      transient, infinity, worker, [?CHILD]},
+    {ok,{{one_for_one,0,1}, [Monitor]}}.
 
 %% ====================================================================
 %% Internal functions
