@@ -11,16 +11,14 @@ COMPILE		= $(CC) $(CFLAGS) -o $(EBIN)
 EBIN_DIRS = $(wildcard deps/*/ebin)
 
 
-all: ebin compile
+all: compile
 
 
 compile:
+	echo $(EBIN_DIRS)
 	@$(ERL) -pa $(EBIN_DIRS) -noinput +B \
 	-eval 'case make:all() of up_to_date -> halt(0); \
         error -> halt(1) end.'
-
-ebin:
-	@mkdir ebin
 
 clean:
 	rm -rf ebin/*.beam ebin/erl_crash.dump erl_crash.dump

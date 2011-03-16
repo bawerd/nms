@@ -1,8 +1,9 @@
-{application, nms,
-[{description, "NMS application"},
- {vsn, "0.1.0"},
- {modules, []},
- {registered, []},
- {applications, [kernel, stdlib]},
- {mod, {nms_app, [{config, "nms.conf"}]}}
- ]}.	
+{application,nms,
+             [{description,[]},
+              {vsn,"1"},
+              {registered,[]},
+              {applications,[kernel,stdlib]},
+              {mod,{nms_app,[]}},
+              {env,[]},
+              {modules,[detector,gen_detector,http_detector,nms_app,
+                        nms_monitor,nms_sup]}]}.

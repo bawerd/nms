@@ -3,6 +3,7 @@
 %% Description: TODO: Add description to detector
 -module(detector).
 
+-record(detector, {options, name, connector}).
 %%
 %% Include files
 %%
@@ -10,17 +11,21 @@
 %%
 %% Exported Functions
 %%
--export([start_link/0]).
+-export([create/1]).
 
 %%
 %% API Functions
 %%
-start_link() ->
-	gen_event:start_link({local, ?MODULE}).
+% @spec create(Configuration = device_config()) -> pid().
+% device_config() = [{atom(), value()}].
 
-add_handler(Handler, Args) ->
-	gen_event:add_handler(?MODULE, Handler, Args).
+create(Configuration) ->
+	create(proplists:get_keys(Configuration), #detector{ options = Configuration }).
 
+create([Conf | Rest], State) ->
+	create(Conf, State);
+create([], State) ->
+	State.
 %%
 %% Local Functions
 %%
